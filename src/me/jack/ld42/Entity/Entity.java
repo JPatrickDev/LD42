@@ -13,6 +13,8 @@ public abstract class Entity {
     private int x, y;
     private Image image;
 
+    protected int moveSpeed = 3;
+
     public static SpriteSheet spriteSheet = null;
 
     public Entity(int x, int y, Image image) {
@@ -49,4 +51,12 @@ public abstract class Entity {
     public int getY() {
         return y;
     }
+
+
+    public void move(int x,int y){
+        //TODO: Collision
+        this.y += y;
+        this.x += x;
+    }
+    public void update(Level level){}
 }

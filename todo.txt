@@ -1,0 +1,10 @@
+Player movement
+Player faces mouse pointer
+Map boundary
+Chunk spawning, despawning
+    - Ensure the chunks surrounding the player are always loaded
+
+Few different images for the EmptyTile
+
+Allow entities to be any size
+Tweak tilesize

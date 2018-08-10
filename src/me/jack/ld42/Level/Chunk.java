@@ -49,4 +49,7 @@ public class Chunk {
     public int getChunkY() {
         return chunkY;
     }
+    public void update(Level level){
+        //TODO: Update each tile.
+    }
 }

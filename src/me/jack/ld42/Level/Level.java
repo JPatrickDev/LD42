@@ -51,6 +51,17 @@ public class Level {
         cY = yDiff;
     }
 
+    public void update(){
+        for(Chunk c : chunks){
+            c.update(this);
+        }
+        for(Entity e : entities){
+            e.update(this);
+        }
+
+        player.update(this);
+    }
+
 
 
 }
