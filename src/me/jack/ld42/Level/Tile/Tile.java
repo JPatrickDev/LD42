@@ -9,7 +9,7 @@ import org.newdawn.slick.SpriteSheet;
 /**
  * Created by Jack on 10/08/2018.
  */
-public class Tile{
+public abstract class Tile{
 
     private int x,y;
     private boolean solid;

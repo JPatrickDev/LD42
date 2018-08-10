@@ -3,6 +3,6 @@ Theme: Running out of space
 Shrinking game area?
 
  ==== Arcade shooter with shrinking map boundaries ====
- Zombie theme
+ Space theme
  Design it to support infinite levels
       - Chunk based

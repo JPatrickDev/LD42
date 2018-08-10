@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer agc = new AppGameContainer(new LD42Game("LD42 - Theme: Running out of space"));
-        agc.setDisplayMode(480,400,false);
+        agc.setDisplayMode(480,480,false);
         agc.start();
     }
 

@@ -26,7 +26,7 @@ public class Chunk {
     }
 
     public void render(Graphics g) {
-
+        g.translate(getChunkX() * Level.CHUNK_SIZE * Level.TILE_SIZE,getChunkY() * Level.CHUNK_SIZE* Level.TILE_SIZE);
         for (int x = 0; x != tiles.length; x++) {
             for (int y = 0; y != tiles[0].length; y++) {
                 tiles[x][y].render(g);
@@ -35,6 +35,7 @@ public class Chunk {
         g.setColor(Color.red);
         g.drawRect(0,0,Level.TILE_SIZE * Level.CHUNK_SIZE,Level.TILE_SIZE * Level.CHUNK_SIZE);
         g.setColor(Color.white);
+        g.translate(-getChunkX() * Level.CHUNK_SIZE * Level.TILE_SIZE,-getChunkY() * Level.CHUNK_SIZE * Level.TILE_SIZE);
     }
 
     public Tile[][] getTiles() {
