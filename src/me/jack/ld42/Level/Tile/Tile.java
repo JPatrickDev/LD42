@@ -32,7 +32,7 @@ public abstract class Tile{
 
     public void render(Graphics g){
         g.drawImage(this.image,x * Level.TILE_SIZE,y * Level.TILE_SIZE);
-        g.drawRect(x * Level.TILE_SIZE,y * Level.TILE_SIZE,Level.TILE_SIZE,Level.TILE_SIZE);
+       // g.drawRect(x * Level.TILE_SIZE,y * Level.TILE_SIZE,Level.TILE_SIZE,Level.TILE_SIZE);
     }
 
     private void createSpritesheet(){

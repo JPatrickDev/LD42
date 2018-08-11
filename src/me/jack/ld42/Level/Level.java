@@ -35,13 +35,17 @@ public class Level {
     private ImageBuffer boundsBuffer = null;
 
     public Level() {
-        for (int x = -3; x != 3; x++) {
+       /* for (int x = -3; x != 3; x++) {
             for (int y = -3; y != 3; y++) {
                 chunks.put(hashPos(x,y),new Chunk(x, y));
             }
         }
+        */
+
         this.player = new EntityPlayer(0, 0);
         bounds = new Circle(0, 0, (Level.CHUNK_SIZE * Level.TILE_SIZE) * 1, 100);
+        this.chunks.put(hashPos(0,0),new Chunk(0,0));
+        chunkGen();
     }
 
     float i = 1.0f;
@@ -142,9 +146,18 @@ public class Level {
         }
     }
 
-    public boolean canMove(Rectangle newHitbox) {
+    public boolean canMove(Rectangle newHitbox,Entity callingEntity) {
         if (!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())) {
             return false;
+        }
+        for(Entity e : entities){
+            Rectangle r = new Rectangle(e.getX(),e.getY(),TILE_SIZE,TILE_SIZE);
+            if(newHitbox.intersects(r))
+                return false;
+        }
+        if(!(callingEntity instanceof EntityPlayer)){
+            if(newHitbox.intersects(new Rectangle(player.getX(),player.getY(),TILE_SIZE,TILE_SIZE)))
+                return false;
         }
         return true;
     }
@@ -177,6 +190,7 @@ public class Level {
                         continue;
                     }
                     Chunk c = new Chunk(p.getX(),p.getY());
+                    c.onCreate(this);
                     chunks.put(chunkPos, c);
                 }
             }

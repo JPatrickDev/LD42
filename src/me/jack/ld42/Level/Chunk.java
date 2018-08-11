@@ -1,5 +1,6 @@
 package me.jack.ld42.Level;
 
+import me.jack.ld42.Entity.Enemy.EasyEnemy;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Level.Tile.EmptyTile;
 import me.jack.ld42.Level.Tile.Tile;
@@ -40,11 +41,14 @@ public class Chunk {
             }
         }
         g.setColor(Color.red);
-        g.drawRect(0,0,Level.TILE_SIZE * Level.CHUNK_SIZE,Level.TILE_SIZE * Level.CHUNK_SIZE);
+      //  g.drawRect(0,0,Level.TILE_SIZE * Level.CHUNK_SIZE,Level.TILE_SIZE * Level.CHUNK_SIZE);
         g.setColor(Color.white);
         g.translate(-getChunkX() * Level.CHUNK_SIZE * Level.TILE_SIZE,-getChunkY() * Level.CHUNK_SIZE * Level.TILE_SIZE);
     }
 
+    public void onCreate(Level level){
+        level.entities.add(new EasyEnemy(getChunkX() * Level.CHUNK_SIZE * Level.TILE_SIZE,getChunkY() * Level.CHUNK_SIZE* Level.TILE_SIZE));
+    }
     public void retire(Level level){
         Point chunk = new Point(getChunkX(),getChunkY());
         for(Entity e : level.entities){

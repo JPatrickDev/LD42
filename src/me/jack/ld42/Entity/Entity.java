@@ -16,12 +16,13 @@ public abstract class Entity {
     private int x, y;
     private Image image;
 
-    protected int moveSpeed = 10;
+    protected int moveSpeed = 4;
 
     public static SpriteSheet spriteSheet = null;
     private float angle = 0f;
     public boolean retired = false;
-
+    private float health = 0;
+    private boolean isDead = false;
     public Entity(int x, int y, Image image) {
         createSpritesheet();
         this.x = x;
@@ -64,7 +65,7 @@ public abstract class Entity {
 
     public void move(int x, int y, Level level) {
         //TODO: Collision
-        if (!level.canMove(new Rectangle(this.x + x, this.y + y, Level.TILE_SIZE, Level.TILE_SIZE)))
+        if (!level.canMove(new Rectangle(this.x + x, this.y + y, Level.TILE_SIZE, Level.TILE_SIZE),this))
             return;
         this.y += y;
         this.x += x;
@@ -78,6 +79,10 @@ public abstract class Entity {
     }
 
     public void update(Level level) {
+        if(isDead())
+            return;
+        if(health <= 0)
+            setDead(true);
     }
 
     public void setAngle(float angle) {
@@ -94,5 +99,19 @@ public abstract class Entity {
         return new Point(x, y);
     }
 
+    public void setHealth(float health) {
+        this.health = health;
+    }
 
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
 }
