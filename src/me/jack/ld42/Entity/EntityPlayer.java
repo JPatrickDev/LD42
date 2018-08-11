@@ -17,17 +17,18 @@ public class EntityPlayer extends Entity {
     public void update(Level level) {
         super.update(level);
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            move(0,-moveSpeed);
+            move(0,-moveSpeed,level);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            move(0,moveSpeed);
+            move(0,moveSpeed,level);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            move(-moveSpeed,0);
+            move(-moveSpeed,0,level);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            move(moveSpeed,0);
+            move(moveSpeed,0,level);
         }
+        lookAt(level.getMouseLookingAtX(),level.getMouseLookingAtY());
     }
 
 

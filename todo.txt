@@ -1,5 +1,5 @@
-Player movement
-Player faces mouse pointer
+Player movement/
+Player faces mouse pointer/
 Map boundary
 Chunk spawning, despawning
     - Ensure the chunks surrounding the player are always loaded
