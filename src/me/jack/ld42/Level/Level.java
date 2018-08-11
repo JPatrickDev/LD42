@@ -3,11 +3,13 @@ package me.jack.ld42.Level;
 import me.jack.ld42.Camera;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Entity.EntityPlayer;
+import org.lwjgl.util.Point;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Jack on 10/08/2018.
@@ -17,7 +19,7 @@ public class Level {
 
     public static final int TILE_SIZE = 32, CHUNK_SIZE = 8;
 
-    private ArrayList<Chunk> chunks = new ArrayList<Chunk>();
+    private HashMap<String,Chunk> chunks = new HashMap<String,Chunk>();
     private ArrayList<Entity> entities = new ArrayList<Entity>();
 
 
@@ -32,7 +34,7 @@ public class Level {
     public Level() {
         for (int x = -3; x != 3; x++) {
             for (int y = -3; y != 3; y++) {
-                chunks.add(new Chunk(x, y));
+                chunks.put(hashPos(x,y),new Chunk(x, y));
             }
         }
         this.player = new EntityPlayer(0, 0);
@@ -44,7 +46,7 @@ public class Level {
     public void render(Graphics g) {
         calculateCamera();
         g.translate(-cX, -cY);
-        for (Chunk c : chunks) {
+        for (Chunk c : chunks.values()) {
             c.render(g);
         }
         for (Entity e : entities) {
@@ -66,7 +68,7 @@ public class Level {
             }
         }
         bounds = new Circle(0, 0, Level.CHUNK_SIZE * Level.TILE_SIZE * 1 * i);
-        i += 0.001f;
+        i += 0.1f;
 
     }
 
@@ -80,7 +82,7 @@ public class Level {
     public void update(Input input) {
         this.mouseLookingAtX = input.getMouseX() + cX;
         this.mouseLookingAtY = input.getMouseY() + cY;
-        for (Chunk c : chunks) {
+        for (Chunk c : chunks.values()) {
             c.update(this);
         }
         for (Entity e : entities) {
@@ -88,6 +90,8 @@ public class Level {
         }
 
         player.update(this);
+
+        chunkGen();
     }
 
 
@@ -120,6 +124,35 @@ public class Level {
             return false;
         }
         return true;
+    }
+
+    public static String hashPos(int x, int y) {
+        return "#" + (x + ":" + y).hashCode();
+    }
+
+    public Chunk getChunkAt(int x, int y) {
+        String hash = hashPos(x, y);
+        if (!chunks.containsKey(hash)) return null;
+        return chunks.get(hash);
+    }
+
+    public void chunkGen() {
+        java.awt.Point currentChunk = player.getInsideChunk();
+        for (int y = -1; y <= 1; y++) {
+            for (int x = -1; x <= 1; x++) {
+                if (x == 0 && y == 0) {
+                    continue;
+                }
+                Point p = new Point(currentChunk.x + x, currentChunk.y + y);
+                String chunkPos = hashPos(p.getX(), p.getY());
+                if (!chunks.containsKey(chunkPos)) {
+             
+                    Chunk c = new Chunk(p.getX(),p.getY());
+                    chunks.put(chunkPos, c);
+                }
+            }
+
+        }
     }
 
 }

@@ -1,10 +1,21 @@
 Player movement/
 Player faces mouse pointer/
-Map boundary
-Chunk spawning, despawning
-    - Ensure the chunks surrounding the player are always loaded
+Map boundary/
+Chunk spawning/
+    - Ensure the chunks surrounding the player are always loaded/
+    - Stop updating/rendering chunks if they are too far away
 
+===11===
+Enemy spaceships
+Better caching of images
+Basic AI
+===13==
 Few different images for the EmptyTile
-
 Allow entities to be any size
 Tweak tilesize
+==14:30==
+Weapon System
+Asteroids
+Upgrades system
+==17:00==
+

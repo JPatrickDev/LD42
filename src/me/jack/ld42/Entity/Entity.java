@@ -7,6 +7,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
+import java.awt.*;
+
 /**
  * Created by Jack on 11/08/2018.
  */
@@ -84,4 +86,12 @@ public abstract class Entity {
     public float getAngle() {
         return angle;
     }
+
+    public Point getInsideChunk(){
+        int x = (Math.floorDiv((int) getX(), (Level.CHUNK_SIZE * Level.TILE_SIZE)));
+        int y = Math.floorDiv((int) getY(), (Level.CHUNK_SIZE * Level.TILE_SIZE));
+        return new Point(x, y);
+    }
+
+
 }
