@@ -24,10 +24,12 @@ public class ProgressBar extends GUIElement {
     public void render(Graphics graphics) {
         graphics.setColor(secondary);
         graphics.fillRect(0,0,getWidth(),getHeight());
+        graphics.setColor(Color.white);
         if(value == 0)
             return;
         graphics.setColor(primary);
         graphics.fillRect(0,0,(getWidth() * (((float)value)/((float)maxValue))),getHeight());
+        graphics.setColor(Color.white);
     }
 
     @Override

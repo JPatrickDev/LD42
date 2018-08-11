@@ -12,42 +12,30 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-
 /**
  * Created by Jack on 10/08/2018.
  */
-public class InGameState extends BasicGameState{
+public class GameOverState extends BasicGameState{
 
-    private Level level;
-    private GUIArea hud;
-    ProgressBar healthBar;
+
     @Override
     public int getID() {
-        return 0;
+        return 1;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.level = new Level();
-        hud = new GUIArea(0,480 - 125,480,125);
-        hud.addElement(new TextArea("Health",0,0,100,25));
-        healthBar = new ProgressBar(0,25,100,5, (int) level.player.getMaxHealth(), Color.red, Color.red.darker());
-        hud.addElement(healthBar);
 
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        level.render(graphics);
-        hud.render(graphics);
+        graphics.drawString("Game over",50,50);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        level.update(gameContainer.getInput());
-        healthBar.setValue((int) level.player.getHealth());
-        if(level.player.isDead())
-            stateBasedGame.enterState(1);
+
     }
 
 }

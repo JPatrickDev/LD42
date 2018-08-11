@@ -10,7 +10,8 @@ Enemy spaceships/
 Basic AI/
 Health/
 Basic HUD/
-Game over
+Game over/
+    - Finish GOState
 Weapon System
 Fire rate for projectiles/
 Spawn inside border
