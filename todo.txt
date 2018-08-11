@@ -5,17 +5,17 @@ Chunk spawning/
     - Ensure the chunks surrounding the player are always loaded/
     - Stop updating/rendering chunks if they are too far away
 
-===11===
 Despawning of chunks/
 Enemy spaceships/
 Basic AI/
-===13==
 Health/
 Basic HUD/
-==14:30==
 Game over
 Weapon System
-==17:00==
+Fire rate for projectiles/
+Spawn inside border
+Health/Ammo drops
+Special ability to increase border size
 Asteroids
 Upgrades system
 Few different images for the EmptyTile

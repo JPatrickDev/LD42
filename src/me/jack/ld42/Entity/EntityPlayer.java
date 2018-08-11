@@ -2,6 +2,7 @@ package me.jack.ld42.Entity;
 
 import me.jack.ld42.Level.Level;
 import me.jack.ld42.Weapon.BasicProjectile;
+import me.jack.ld42.Weapon.Projectile;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Image;
 
@@ -10,12 +11,16 @@ import org.newdawn.slick.Image;
  */
 public class EntityPlayer extends Entity {
 
+    private Projectile currentProjectile;
+
     public EntityPlayer(int x, int y) {
         super(x, y, 0, 0);
         setHealth(100f);
         setMaxHealth(100f);
+        this.currentProjectile = new BasicProjectile();
     }
 
+    private long lastShot;
     @Override
     public void update(Level level) {
         super.update(level);
@@ -31,8 +36,9 @@ public class EntityPlayer extends Entity {
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
             move(moveSpeed,0,level);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
-            level.addProjectile(new EntityProjectile(getX(),getY(),new BasicProjectile(),level.getMouseLookingAtX(),level.getMouseLookingAtY(),this));
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q) && System.currentTimeMillis() - lastShot >= currentProjectile.getFireRate()){
+            level.addProjectile(new EntityProjectile(getX(),getY(),currentProjectile,level.getMouseLookingAtX(),level.getMouseLookingAtY(),this));
+            lastShot = System.currentTimeMillis();
         }
         lookAt(level.getMouseLookingAtX(),level.getMouseLookingAtY());
     }

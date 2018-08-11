@@ -9,17 +9,19 @@ import org.newdawn.slick.SpriteSheet;
  */
 public abstract class Projectile {
 
+    private int fireRate;
     private float moveSpeed,damage;
     private Image image;
     private String name;
     private int life;
     public static SpriteSheet spriteSheet = null;
 
-    public Projectile(String name, float moveSpeed, float damage, int life, int tX,int tY){
+    public Projectile(String name, float moveSpeed, float damage, int fireRate,int life, int tX,int tY){
         this.name = name;
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         this.life = life;
+        this.fireRate = fireRate;
         if(spriteSheet == null){
             try {
                 spriteSheet = new SpriteSheet("res/projectiles.png",16,16);
@@ -44,5 +46,9 @@ public abstract class Projectile {
 
     public float getDamage() {
         return damage;
+    }
+
+    public int getFireRate() {
+        return fireRate;
     }
 }
