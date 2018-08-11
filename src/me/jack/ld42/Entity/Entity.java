@@ -16,10 +16,11 @@ public abstract class Entity {
     private int x, y;
     private Image image;
 
-    protected int moveSpeed = 3;
+    protected int moveSpeed = 10;
 
     public static SpriteSheet spriteSheet = null;
     private float angle = 0f;
+    public boolean retired = false;
 
     public Entity(int x, int y, Image image) {
         createSpritesheet();

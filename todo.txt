@@ -7,7 +7,7 @@ Chunk spawning/
 
 ===11===
 Enemy spaceships
-Better caching of images
+Despawning of chunks
 Basic AI
 ===13==
 Few different images for the EmptyTile

@@ -10,6 +10,8 @@ import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Jack on 10/08/2018.
@@ -20,7 +22,8 @@ public class Level {
     public static final int TILE_SIZE = 32, CHUNK_SIZE = 8;
 
     private HashMap<String,Chunk> chunks = new HashMap<String,Chunk>();
-    private ArrayList<Entity> entities = new ArrayList<Entity>();
+    private HashMap<String,Chunk> retiredChunks = new HashMap<String,Chunk>();
+    public ArrayList<Entity> entities = new ArrayList<Entity>();
 
 
     private EntityPlayer player;
@@ -92,6 +95,26 @@ public class Level {
         player.update(this);
 
         chunkGen();
+        retireChunks();
+
+
+        Iterator it = chunks.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            Chunk c = (Chunk) pair.getValue();
+            if (c.retired) {
+                it.remove();
+            }
+        }
+        Iterator<Entity> entityIterator = entities.iterator();
+        while (entityIterator.hasNext()) {
+            Entity e = entityIterator.next();
+            if (e.retired)
+                entityIterator.remove();
+        }
+
+        System.out.println("Active: " + chunks.size() + " Retired: " + retiredChunks.size());
+
     }
 
 
@@ -146,7 +169,13 @@ public class Level {
                 Point p = new Point(currentChunk.x + x, currentChunk.y + y);
                 String chunkPos = hashPos(p.getX(), p.getY());
                 if (!chunks.containsKey(chunkPos)) {
-             
+                    if (retiredChunks.containsKey(chunkPos)) {
+                        Chunk c = retiredChunks.get(chunkPos);
+                        c.load(this);
+                        retiredChunks.remove(c.getHashPos());
+                        chunks.put(chunkPos, c);
+                        continue;
+                    }
                     Chunk c = new Chunk(p.getX(),p.getY());
                     chunks.put(chunkPos, c);
                 }
@@ -155,4 +184,12 @@ public class Level {
         }
     }
 
+    private void retireChunks(){
+        for(Chunk c : this.chunks.values()){
+            if (Math.abs(c.getChunkX() - player.getInsideChunk().x) <= 1 && Math.abs(c.getChunkY() - player.getInsideChunk().y) <= 1)
+                continue;
+            c.retire(this);
+            retiredChunks.put(c.getHashPos(),c);
+        }
+    }
 }
