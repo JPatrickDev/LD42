@@ -1,8 +1,10 @@
 package me.jack.ld42.Level;
 
 import me.jack.ld42.Camera;
+import me.jack.ld42.Entity.Enemy.BaseEnemy;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Entity.EntityPlayer;
+import me.jack.ld42.Entity.EntityProjectile;
 import org.lwjgl.util.Point;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
@@ -21,12 +23,12 @@ public class Level {
 
     public static final int TILE_SIZE = 32, CHUNK_SIZE = 8;
 
-    private HashMap<String,Chunk> chunks = new HashMap<String,Chunk>();
-    private HashMap<String,Chunk> retiredChunks = new HashMap<String,Chunk>();
+    private HashMap<String, Chunk> chunks = new HashMap<String, Chunk>();
+    private HashMap<String, Chunk> retiredChunks = new HashMap<String, Chunk>();
     public ArrayList<Entity> entities = new ArrayList<Entity>();
+    public ArrayList<Entity> toAdd = new ArrayList<Entity>();
 
-
-    private EntityPlayer player;
+    public EntityPlayer player;
 
     private int cX = 0, cY = 0;
     private int mouseLookingAtX, mouseLookingAtY;
@@ -43,12 +45,12 @@ public class Level {
         */
 
         this.player = new EntityPlayer(0, 0);
-        bounds = new Circle(0, 0, (Level.CHUNK_SIZE * Level.TILE_SIZE) * 1, 100);
-        this.chunks.put(hashPos(0,0),new Chunk(0,0));
+        bounds = new Circle(0, 0, i, 100);
+        this.chunks.put(hashPos(0, 0), new Chunk(0, 0));
         chunkGen();
     }
 
-    float i = 1.0f;
+    float i = (Level.CHUNK_SIZE * Level.TILE_SIZE) * 5;
 
     public void render(Graphics g) {
         calculateCamera();
@@ -62,9 +64,6 @@ public class Level {
         player.render(g);
         g.resetTransform();
         if (bounds != null) {
-            //   g.setColor(new Color(128,128,128,128));
-            //g.fill(bounds);
-            // g.setColor(Color.white);
             generateBoundsImage();
             Image i = boundsBuffer.getImage();
             g.drawImage(i, 0, 0);
@@ -74,8 +73,9 @@ public class Level {
                 e.printStackTrace();
             }
         }
-        bounds = new Circle(0, 0, Level.CHUNK_SIZE * Level.TILE_SIZE * 1 * i);
-        i += 0.1f;
+        bounds = new Circle(0, 0, i);
+        if (i >= 0)
+            i -= 0.5f;
 
     }
 
@@ -113,10 +113,14 @@ public class Level {
         Iterator<Entity> entityIterator = entities.iterator();
         while (entityIterator.hasNext()) {
             Entity e = entityIterator.next();
-            if (e.retired)
+            if (e.retired || e.isDead())
                 entityIterator.remove();
         }
 
+        for (Entity add : toAdd) {
+            entities.add(add);
+        }
+        toAdd.clear();
         System.out.println("Active: " + chunks.size() + " Retired: " + retiredChunks.size());
 
     }
@@ -146,17 +150,39 @@ public class Level {
         }
     }
 
-    public boolean canMove(Rectangle newHitbox,Entity callingEntity) {
+    public boolean canMove(Rectangle newHitbox, Entity callingEntity) {
+        if (callingEntity instanceof EntityProjectile) {
+            for (Entity e : entities) {
+                if (e instanceof EntityProjectile)
+                    continue;
+                if (e instanceof BaseEnemy && ((EntityProjectile) callingEntity).getOwner() instanceof BaseEnemy)
+                    continue;
+                Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+                if (newHitbox.intersects(r) && e != callingEntity) {
+                    callingEntity.onTouchEntity(e);
+                    callingEntity.setDead(true);
+                    return false;
+                }
+            }
+            if (newHitbox.intersects(new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight())) && !(((EntityProjectile) callingEntity).getOwner() instanceof EntityPlayer)) {
+                callingEntity.onTouchEntity(player);
+                callingEntity.setDead(true);
+                return false;
+            }
+            return true;
+        }
         if (!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())) {
             return false;
         }
-        for(Entity e : entities){
-            Rectangle r = new Rectangle(e.getX(),e.getY(),TILE_SIZE,TILE_SIZE);
-            if(newHitbox.intersects(r))
+        for (Entity e : entities) {
+            if (e instanceof EntityProjectile)
+                continue;
+            Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+            if (newHitbox.intersects(r) && e != callingEntity)
                 return false;
         }
-        if(!(callingEntity instanceof EntityPlayer)){
-            if(newHitbox.intersects(new Rectangle(player.getX(),player.getY(),TILE_SIZE,TILE_SIZE)))
+        if (!(callingEntity instanceof EntityPlayer)) {
+            if (newHitbox.intersects(new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight())))
                 return false;
         }
         return true;
@@ -189,7 +215,7 @@ public class Level {
                         chunks.put(chunkPos, c);
                         continue;
                     }
-                    Chunk c = new Chunk(p.getX(),p.getY());
+                    Chunk c = new Chunk(p.getX(), p.getY());
                     c.onCreate(this);
                     chunks.put(chunkPos, c);
                 }
@@ -198,12 +224,16 @@ public class Level {
         }
     }
 
-    private void retireChunks(){
-        for(Chunk c : this.chunks.values()){
+    private void retireChunks() {
+        for (Chunk c : this.chunks.values()) {
             if (Math.abs(c.getChunkX() - player.getInsideChunk().x) <= 1 && Math.abs(c.getChunkY() - player.getInsideChunk().y) <= 1)
                 continue;
             c.retire(this);
-            retiredChunks.put(c.getHashPos(),c);
+            retiredChunks.put(c.getHashPos(), c);
         }
+    }
+
+    public void addProjectile(EntityProjectile projectile) {
+        toAdd.add(projectile);
     }
 }

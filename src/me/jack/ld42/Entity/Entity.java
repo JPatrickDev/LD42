@@ -13,35 +13,40 @@ import java.awt.*;
  * Created by Jack on 11/08/2018.
  */
 public abstract class Entity {
-    private int x, y;
+    private int x, y,width,height;
     private Image image;
 
-    protected int moveSpeed = 4;
+    public int moveSpeed = 4;
 
     public static SpriteSheet spriteSheet = null;
     private float angle = 0f;
     public boolean retired = false;
-    private float health = 0;
+    private float health = 0,maxHealth = 0;
     private boolean isDead = false;
     public Entity(int x, int y, Image image) {
         createSpritesheet();
         this.x = x;
         this.y = y;
         this.image = image;
-        if (image != null)
+        if (image != null) {
             this.image.setCenterOfRotation(image.getWidth() / 2, image.getHeight() / 2);
+            this.width = image.getWidth();
+            this.height = image.getHeight();
+        }
     }
 
     public Entity(int x, int y, int tX, int tY) {
         this(x, y, null);
         this.image = spriteSheet.getSprite(tX, tY);
         this.image.setCenterOfRotation(image.getWidth() / 2, image.getHeight() / 2);
+        this.width = image.getWidth();
+        this.height = image.getHeight();
     }
 
     public void render(Graphics g) {
         g.rotate(x + this.image.getWidth() / 2, y + this.image.getHeight() / 2, this.angle);
         g.drawImage(this.image, x, y);
-        g.drawRect(x, y, Level.TILE_SIZE, Level.TILE_SIZE);
+        g.drawRect(x, y,getWidth(), getWidth());
     }
 
     private void createSpritesheet() {
@@ -63,12 +68,12 @@ public abstract class Entity {
     }
 
 
-    public void move(int x, int y, Level level) {
-        //TODO: Collision
-        if (!level.canMove(new Rectangle(this.x + x, this.y + y, Level.TILE_SIZE, Level.TILE_SIZE),this))
-            return;
+    public boolean move(int x, int y, Level level) {
+        if (!level.canMove(new Rectangle(this.x + x, this.y + y, getWidth(), getHeight()),this))
+            return false;
         this.y += y;
         this.x += x;
+        return true;
     }
 
     public void lookAt(int tX, int tY) {
@@ -103,6 +108,10 @@ public abstract class Entity {
         this.health = health;
     }
 
+    public void setMaxHealth(float health) {
+        this.maxHealth = health;
+    }
+
     public void setDead(boolean dead) {
         isDead = dead;
     }
@@ -113,5 +122,19 @@ public abstract class Entity {
 
     public boolean isDead() {
         return isDead;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void onTouchEntity(Entity touched){}
+
+    public float getMaxHealth() {
+        return maxHealth;
     }
 }

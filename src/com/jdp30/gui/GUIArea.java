@@ -28,6 +28,7 @@ public class GUIArea {
 
     public void render(Graphics g) {
         g.translate(x, y);
+        g.fillRect(0,0,getWidth(),getHeight());
         for (GUIElement element : elements) {
             g.translate(element.getX(), element.getY());
             element.render(g);

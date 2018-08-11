@@ -7,16 +7,17 @@ Chunk spawning/
 
 ===11===
 Despawning of chunks/
-Enemy spaceships
-Basic AI
+Enemy spaceships/
+Basic AI/
 ===13==
-Asteroids
-Few different images for the EmptyTile
-Allow entities to be any size
-Tweak tilesize
+Health/
+Basic HUD/
 ==14:30==
+Game over
 Weapon System
+==17:00==
 Asteroids
 Upgrades system
-==17:00==
-
+Few different images for the EmptyTile
+Allow entities to be any size/
+Tweak tilesize
