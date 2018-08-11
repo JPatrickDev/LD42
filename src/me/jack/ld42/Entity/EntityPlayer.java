@@ -15,8 +15,9 @@ public class EntityPlayer extends Entity {
 
     public EntityPlayer(int x, int y) {
         super(x, y, 0, 0);
-        setHealth(100f);
         setMaxHealth(100f);
+        setHealth(100f);
+
         this.currentProjectile = new BasicProjectile();
     }
 
@@ -36,12 +37,13 @@ public class EntityPlayer extends Entity {
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
             move(moveSpeed,0,level);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_Q) && System.currentTimeMillis() - lastShot >= currentProjectile.getFireRate()){
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && System.currentTimeMillis() - lastShot >= currentProjectile.getFireRate()){
             level.addProjectile(new EntityProjectile(getX(),getY(),currentProjectile,level.getMouseLookingAtX(),level.getMouseLookingAtY(),this));
             lastShot = System.currentTimeMillis();
         }
         lookAt(level.getMouseLookingAtX(),level.getMouseLookingAtY());
     }
+
 
 
 }

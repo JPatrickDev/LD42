@@ -1,7 +1,9 @@
 package me.jack.ld42.Level;
 
 import me.jack.ld42.Camera;
+import me.jack.ld42.Entity.Drop.Drop;
 import me.jack.ld42.Entity.Enemy.BaseEnemy;
+import me.jack.ld42.Entity.Enemy.EasyEnemy;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Entity.EntityPlayer;
 import me.jack.ld42.Entity.EntityProjectile;
@@ -10,10 +12,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Jack on 10/08/2018.
@@ -21,7 +20,7 @@ import java.util.Map;
 public class Level {
 
 
-    public static final int TILE_SIZE = 32, CHUNK_SIZE = 8;
+    public static final int TILE_SIZE = 64, CHUNK_SIZE = 8;
 
     private HashMap<String, Chunk> chunks = new HashMap<String, Chunk>();
     private HashMap<String, Chunk> retiredChunks = new HashMap<String, Chunk>();
@@ -81,10 +80,12 @@ public class Level {
 
     private void calculateCamera() {
         int xDiff = (int) (player.getX() - 240);
-        int yDiff = (int) (player.getY() - 240);
+        int yDiff = (int) (player.getY() - 177);
         cX = xDiff;
         cY = yDiff;
     }
+
+    private Random r = new Random();
 
     public void update(Input input) {
         this.mouseLookingAtX = input.getMouseX() + cX;
@@ -117,6 +118,11 @@ public class Level {
                 entityIterator.remove();
         }
 
+        if (r.nextInt(5) == 0) {
+            int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+            int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+            toAdd.add(new EasyEnemy(xPos, yPos));
+        }
         for (Entity add : toAdd) {
             entities.add(add);
         }
@@ -151,27 +157,39 @@ public class Level {
     }
 
     public boolean canMove(Rectangle newHitbox, Entity callingEntity) {
+        if (callingEntity instanceof EntityPlayer) {
+            for (Entity e : this.entities) {
+                if (e instanceof Drop) {
+                    Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+                    if (newHitbox.intersects(r) && e != callingEntity) {
+                        ((Drop) e).use(this);
+                        e.setDead(true, this);
+                    }
+                }
+            }
+        }
         if (callingEntity instanceof EntityProjectile) {
             for (Entity e : entities) {
-                if (e instanceof EntityProjectile)
+                if (e instanceof EntityProjectile || e instanceof Drop)
                     continue;
                 if (e instanceof BaseEnemy && ((EntityProjectile) callingEntity).getOwner() instanceof BaseEnemy)
                     continue;
                 Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
                 if (newHitbox.intersects(r) && e != callingEntity) {
                     callingEntity.onTouchEntity(e);
-                    callingEntity.setDead(true);
+                    callingEntity.setDead(true, this);
                     return false;
                 }
             }
             if (newHitbox.intersects(new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight())) && !(((EntityProjectile) callingEntity).getOwner() instanceof EntityPlayer)) {
                 callingEntity.onTouchEntity(player);
-                callingEntity.setDead(true);
+                callingEntity.setDead(true, this);
                 return false;
             }
             return true;
         }
         if (!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())) {
+            callingEntity.setDead(true, this);
             return false;
         }
         for (Entity e : entities) {

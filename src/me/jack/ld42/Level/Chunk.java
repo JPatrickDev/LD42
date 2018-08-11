@@ -47,7 +47,7 @@ public class Chunk {
     }
 
     public void onCreate(Level level){
-        level.entities.add(new EasyEnemy(getChunkX() * Level.CHUNK_SIZE * Level.TILE_SIZE,getChunkY() * Level.CHUNK_SIZE* Level.TILE_SIZE));
+
     }
     public void retire(Level level){
         Point chunk = new Point(getChunkX(),getChunkY());
@@ -67,10 +67,6 @@ public class Chunk {
             level.entities.add(e);
         }
         stored.clear();
-    }
-
-    public Tile[][] getTiles() {
-        return tiles;
     }
 
     public int getChunkX() {

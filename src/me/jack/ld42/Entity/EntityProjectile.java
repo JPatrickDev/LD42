@@ -37,7 +37,7 @@ public class EntityProjectile extends Entity {
         move(0, vel.y, level);
 
         if(System.currentTimeMillis() - spawned >= projectile.getLifespan()){
-            this.setDead(true);
+            this.setDead(true,level);
         }
 
     }

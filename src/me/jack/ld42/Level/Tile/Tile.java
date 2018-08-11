@@ -13,7 +13,7 @@ public abstract class Tile{
 
     private int x,y;
     private boolean solid;
-    private Image image;
+    public Image image;
 
     public static SpriteSheet spriteSheet = null;
 

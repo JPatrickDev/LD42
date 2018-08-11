@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public abstract class Entity {
     private int x, y,width,height;
-    private Image image;
+    public Image image;
 
     public int moveSpeed = 4;
 
@@ -46,13 +46,14 @@ public abstract class Entity {
     public void render(Graphics g) {
         g.rotate(x + this.image.getWidth() / 2, y + this.image.getHeight() / 2, this.angle);
         g.drawImage(this.image, x, y);
-        g.drawRect(x, y,getWidth(), getWidth());
+        g.rotate(x + this.image.getWidth() / 2, y + this.image.getHeight() / 2, -this.angle);
+      //  g.drawRect(x, y,getWidth(), getWidth());
     }
 
     private void createSpritesheet() {
         if (Entity.spriteSheet == null) {
             try {
-                spriteSheet = new SpriteSheet(new Image("res/entities.png"), Level.TILE_SIZE, Level.TILE_SIZE);
+                spriteSheet = new SpriteSheet(new Image("res/entities.png"), 32, 32);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -87,7 +88,7 @@ public abstract class Entity {
         if(isDead())
             return;
         if(health <= 0)
-            setDead(true);
+            setDead(true,level);
     }
 
     public void setAngle(float angle) {
@@ -106,15 +107,21 @@ public abstract class Entity {
 
     public void setHealth(float health) {
         this.health = health;
+        if(this.health > getMaxHealth() && getMaxHealth() > 0)
+            this.health = getMaxHealth();
     }
 
     public void setMaxHealth(float health) {
         this.maxHealth = health;
     }
 
-    public void setDead(boolean dead) {
+    public void setDead(boolean dead,Level level) {
+        if(dead)
+            onDeath(level);
         isDead = dead;
     }
+
+    public void onDeath(Level level){}
 
     public float getHealth() {
         return health;
