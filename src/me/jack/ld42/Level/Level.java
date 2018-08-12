@@ -193,7 +193,7 @@ public class Level {
         }
         if (callingEntity instanceof EntityAsteroid) {
             for (Entity e : this.entities) {
-                if (e instanceof EntityAsteroid && e != callingEntity) {
+                if (e != callingEntity) {
                     Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
                     if (r.intersects(newHitbox)) {
                         e.collide();

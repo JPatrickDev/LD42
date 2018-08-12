@@ -26,9 +26,11 @@ Balance
 Finish GOState
 Weapon System/
     - Weapons need to be locked until a level is reached/
-Special ability to increase border size
+Special ability to increase border size/
 Upgrades system
 Sound
 Main menu
 About Screen
 Do a can move before spawning an Entity to make sure it fits/
+Improved art for enemy
+More enemies
