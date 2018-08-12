@@ -36,6 +36,12 @@ public class InGameState extends BasicGameState implements GUIElementListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         hudBg = new Image("res/hud.png");
+    }
+
+    @Override
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        super.enter(container, game);
+        slots.clear();
         this.level = new Level(this);
         hud = new GUIArea(0, 480 - 125, 480, 125);
         hud.addElement(new TextArea("Health", 4, 4, 103, 13));

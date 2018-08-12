@@ -23,7 +23,7 @@ Improved AI
       - Maybe some passive towers as well?
 Exp System/
 Balance
-Finish GOState
+Finish GOState/
 Weapon System/
     - Weapons need to be locked until a level is reached/
 Special ability to increase border size/
