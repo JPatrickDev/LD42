@@ -37,16 +37,10 @@ public class Level {
     private ImageBuffer boundsBuffer = null;
 
     public InGameState parent;
+    private int reversedFor = -1;
 
     public Level(InGameState parent) {
         this.parent = parent;
-       /* for (int x = -3; x != 3; x++) {
-            for (int y = -3; y != 3; y++) {
-                chunks.put(hashPos(x,y),new Chunk(x, y));
-            }
-        }
-        */
-
         this.player = new EntityPlayer(0, 0);
         bounds = new Circle(0, 0, i, 100);
         this.chunks.put(hashPos(0, 0), new Chunk(0, 0));
@@ -55,6 +49,7 @@ public class Level {
 
     float i = (Level.CHUNK_SIZE * Level.TILE_SIZE) * 2;
 
+    long reversedAt = 0;
     public void render(Graphics g) {
         calculateCamera();
         g.translate(-cX, -cY);
@@ -78,9 +73,18 @@ public class Level {
         }
         bounds = new Circle(0, 0, i);
         if (i >= 0)
+            if(reversedFor != -1){
+                i += 0.5f;
+            }else{
             i -= 0.5f;
+            }
 
-
+        if(reversedFor != -1){
+            if(System.currentTimeMillis() - reversedAt >= reversedFor){
+                reversedAt = 0;
+                reversedFor = -1;
+            }
+        }
     }
 
     private void calculateCamera() {
@@ -292,5 +296,10 @@ public class Level {
 
     public void addProjectile(EntityProjectile projectile) {
         toAdd.add(projectile);
+    }
+
+    public void reverseBorder(int i) {
+        reversedAt = System.currentTimeMillis();
+        reversedFor = i;
     }
 }

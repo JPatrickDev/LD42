@@ -38,6 +38,9 @@ public class EntityPlayer extends Entity {
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
             move(moveSpeed, 0, level);
         }
+        if(Keyboard.isKeyDown(Keyboard.KEY_E)){
+            level.reverseBorder(1000);
+        }
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && System.currentTimeMillis() - lastShot >= level.parent.getSelected().getProjectile().getFireRate()) {
             level.addProjectile(new EntityProjectile(getX(), getY(), level.parent.getSelected().getProjectile(), level.getMouseLookingAtX(), level.getMouseLookingAtY(), this));
             lastShot = System.currentTimeMillis();
