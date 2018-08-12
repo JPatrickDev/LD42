@@ -25,10 +25,12 @@ public abstract class BaseEnemy extends Entity {
     @Override
     public void onDeath(Level level) {
         super.onDeath(level);
-        int j = 3 + r.nextInt(3);
+        int j = 1 + r.nextInt(3);
         for (int i = 0; i != j; i++)
             level.toAdd.add(new BasicHealthDrop(getX(), getY()));
-        level.toAdd.add(new ExpDrop(getX(), getY()));
+        j = 3 + r.nextInt(3);
+        for (int i = 0; i != j; i++)
+           level.toAdd.add(new ExpDrop(getX(), getY()));
     }
 
     public abstract float getExpPoints();

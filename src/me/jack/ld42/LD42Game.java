@@ -1,5 +1,6 @@
 package me.jack.ld42;
 
+import me.jack.ld42.States.AboutState;
 import me.jack.ld42.States.GameOverState;
 import me.jack.ld42.States.InGameState;
 import me.jack.ld42.States.MainMenuState;
@@ -20,5 +21,6 @@ public class LD42Game extends StateBasedGame{
         addState(new MainMenuState());
         addState(new InGameState());
         addState(new GameOverState());
+        addState(new AboutState());
     }
 }
