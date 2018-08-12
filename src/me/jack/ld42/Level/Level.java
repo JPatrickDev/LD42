@@ -7,6 +7,7 @@ import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Entity.Enemy.EntityAsteroid;
 import me.jack.ld42.Entity.EntityPlayer;
 import me.jack.ld42.Entity.EntityProjectile;
+import me.jack.ld42.States.InGameState;
 import org.lwjgl.util.Point;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
@@ -35,7 +36,10 @@ public class Level {
     private Circle bounds = null;
     private ImageBuffer boundsBuffer = null;
 
-    public Level() {
+    public InGameState parent;
+
+    public Level(InGameState parent) {
+        this.parent = parent;
        /* for (int x = -3; x != 3; x++) {
             for (int y = -3; y != 3; y++) {
                 chunks.put(hashPos(x,y),new Chunk(x, y));
@@ -88,7 +92,6 @@ public class Level {
     private Random r = new Random();
 
     public void update(Input input) {
-        System.out.println(entities.size());
         this.mouseLookingAtX = input.getMouseX() + cX;
         this.mouseLookingAtY = input.getMouseY() + cY;
         for (Chunk c : chunks.values()) {
@@ -138,7 +141,7 @@ public class Level {
             entities.add(add);
         }
         toAdd.clear();
-        System.out.println("Active: " + chunks.size() + " Retired: " + retiredChunks.size());
+
 
     }
 
