@@ -26,7 +26,7 @@ public class EntityProjectile extends Entity {
         float ySpeed = targetY - getY();
         float factor = (float) (projectile.getMoveSpeed() / Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed));
 
-        //entity.lookAt(currentTargetX,currentTargetY);
+        lookAt(targetX,targetY);
         vel = new Point((int) (xSpeed * factor), (int) (ySpeed * factor));
     }
 

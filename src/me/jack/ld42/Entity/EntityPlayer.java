@@ -1,10 +1,9 @@
 package me.jack.ld42.Entity;
 
 import me.jack.ld42.Level.Level;
-import me.jack.ld42.Weapon.BasicProjectile;
+import me.jack.ld42.Weapon.BasicMissile;
 import me.jack.ld42.Weapon.Projectile;
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.Image;
 
 /**
  * Created by Jack on 11/08/2018.
@@ -20,7 +19,7 @@ public class EntityPlayer extends Entity {
         setMaxHealth(100f);
         setHealth(100f);
 
-        this.currentProjectile = new BasicProjectile();
+        this.currentProjectile = new BasicMissile();
     }
 
     private long lastShot;
