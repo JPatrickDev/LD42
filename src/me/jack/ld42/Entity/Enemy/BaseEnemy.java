@@ -10,8 +10,9 @@ import org.newdawn.slick.Image;
 /**
  * Created by Jack on 11/08/2018.
  */
-public abstract class BaseEnemy extends Entity{
+public abstract class BaseEnemy extends Entity {
     public EnemyAI ai;
+
     public BaseEnemy(int x, int y, Image image) {
         super(x, y, image);
     }
@@ -24,7 +25,9 @@ public abstract class BaseEnemy extends Entity{
     @Override
     public void onDeath(Level level) {
         super.onDeath(level);
-        level.toAdd.add(new BasicHealthDrop(getX(), getY()));
+        int j = 3 + r.nextInt(3);
+        for (int i = 0; i != j; i++)
+            level.toAdd.add(new BasicHealthDrop(getX(), getY()));
         level.toAdd.add(new ExpDrop(getX(), getY()));
     }
 

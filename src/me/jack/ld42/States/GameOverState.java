@@ -28,6 +28,12 @@ public class GameOverState extends BasicGameState implements GUIElementListener 
     }
 
     @Override
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        super.enter(container, game);
+        mode = -1;
+    }
+
+    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         area = new GUIArea(0,0,gameContainer.getWidth(),gameContainer.getHeight());
         area.addElement(new TextArea("Game Over!",0,0,area.getWidth(),50,Color.black,Color.white));
