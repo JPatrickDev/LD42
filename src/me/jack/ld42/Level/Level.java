@@ -50,7 +50,7 @@ public class Level {
         chunkGen();
     }
 
-    float i = (Level.CHUNK_SIZE * Level.TILE_SIZE) * 5;
+    float i = (Level.CHUNK_SIZE * Level.TILE_SIZE) * 2;
 
     public void render(Graphics g) {
         calculateCamera();
@@ -89,6 +89,7 @@ public class Level {
     private Random r = new Random();
 
     public void update(Input input) {
+        System.out.println(entities.size());
         this.mouseLookingAtX = input.getMouseX() + cX;
         this.mouseLookingAtY = input.getMouseY() + cY;
         for (Chunk c : chunks.values()) {
@@ -119,7 +120,7 @@ public class Level {
                 entityIterator.remove();
         }
 
-        if (r.nextInt(1) == 0) {
+        if (r.nextInt(10) == 0) {
             int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
             int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
             toAdd.add(new EntityAsteroid(xPos, yPos,100));
@@ -158,6 +159,25 @@ public class Level {
     }
 
     public boolean canMove(Rectangle newHitbox, Entity callingEntity) {
+        if (!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())) {
+            callingEntity.setDead(true, this);
+            return false;
+        }
+        if(callingEntity instanceof Drop){
+            return true;
+        }
+        if(callingEntity instanceof EntityAsteroid){
+            for (Entity e : this.entities) {
+                if (e instanceof EntityAsteroid && e != callingEntity) {
+                    Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+                    if(r.intersects(newHitbox)){
+                        e.collide();
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         if (callingEntity instanceof EntityPlayer) {
             for (Entity e : this.entities) {
                 if (e instanceof Drop) {
@@ -189,10 +209,7 @@ public class Level {
             }
             return true;
         }
-        if (!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())) {
-            callingEntity.setDead(true, this);
-            return false;
-        }
+
         for (Entity e : entities) {
             if (e instanceof EntityProjectile)
                 continue;

@@ -1,11 +1,13 @@
 package me.jack.ld42.Entity.Drop;
 
+import me.jack.ld42.Entity.Enemy.AI.FloatingAI;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Level.Level;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -16,10 +18,10 @@ public abstract class Drop extends Entity {
     private static SpriteSheet spriteSheet = null;
     public static final Random r = new Random();
     private float xVel,yVel;
+    private FloatingAI ai;
     public Drop(int x, int y, int tX, int tY) {
         super(x, y, tX, tY);
-        xVel = r.nextFloat() * 10 - 5;
-        yVel = r.nextFloat() * 10 - 5;
+        ai = new FloatingAI();
         setMaxHealth(1);
         setHealth(1);
         if (spriteSheet == null) {
@@ -35,10 +37,9 @@ public abstract class Drop extends Entity {
     @Override
     public void update(Level level) {
         super.update(level);
-        move((int) xVel,0,level);
-        move(0, (int) yVel,level);
-        xVel /= 1.1;
-        yVel /= 1.1;
+        Point next = ai.getNextMove(level,this);
+        move((int) next.x,0,level);
+        move(0, (int) next.y,level);
     }
 
 

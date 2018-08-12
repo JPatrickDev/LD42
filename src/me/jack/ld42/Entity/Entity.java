@@ -149,4 +149,8 @@ public abstract class Entity {
     public float getMaxHealth() {
         return maxHealth;
     }
+
+    public void collide() {
+
+    }
 }

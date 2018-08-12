@@ -39,7 +39,8 @@ public class EntityAsteroid extends BaseEnemy{
     public void update(Level level) {
         super.update(level);
         Point next = this.ai.getNextMove(level, this);
-        move(next.x, next.y, level);
+        move(0, next.y, level);
+        move(next.x, 0, level);
     }
 
     @Override
@@ -120,5 +121,11 @@ public class EntityAsteroid extends BaseEnemy{
             }
         }
         return null;
+    }
+
+
+    @Override
+    public void collide() {
+        ai.onCollide();
     }
 }

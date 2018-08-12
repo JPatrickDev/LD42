@@ -12,25 +12,38 @@ import java.util.Random;
 public class FloatingAI extends EnemyAI {
 
     private int currentTargetX = 0, currentTargetY = 0;
+    private int xVel,yVel;
+
+    Random r = new Random();
 
     @Override
     public Point getNextMove(Level level, Entity entity) {
-        Random r = new Random();
-        if (currentTargetX == 0 || reachedTarget(entity) || r.nextInt(20) == 0) {
+        if(xVel == 0)
+            updateVel();
+        return new Point(xVel,yVel);
+    }
 
-            currentTargetX = entity.getX() + (r.nextInt(150) - 75);
-            currentTargetY = entity.getY() + (r.nextInt(150) - 75);
+    public void updateVel(){
+        xVel = (int) ((int) (r.nextFloat() * 1.5) + 0.5);
+        yVel = (int) ((int) (r.nextFloat() * 1.5) + 0.5);
+
+        if(r.nextBoolean()){
+            xVel *= -1;
         }
-        float xSpeed = currentTargetX - entity.getX();
-        float ySpeed = currentTargetY - entity.getY();
-        float factor = (float) (2f/ Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed));
+        if(r.nextBoolean()){
+            yVel *= -1;
+        }
 
-        //entity.lookAt(currentTargetX,currentTargetY);
-        return new Point((int) (xSpeed * factor), (int) (ySpeed * factor));
     }
 
     public boolean reachedTarget(Entity entity) {
         return Math.abs(entity.getX() - currentTargetX) <= 1 && Math.abs(entity.getY() - currentTargetY) <= 1;
     }
 
+    public void onCollide(){
+        xVel *= -1;
+        xVel /= 1.5;
+        yVel *= -1;
+        yVel /= 1.5;
+    }
 }
