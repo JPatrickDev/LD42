@@ -74,9 +74,9 @@ public class Level {
         bounds = new Circle(0, 0, i);
         if (i >= 0)
             if(reversedFor != -1){
-                i += 0.5f;
+                i += 1f;
             }else{
-            i -= 0.5f;
+            i -= 0.25f;
             }
 
         if(reversedFor != -1){
@@ -222,6 +222,9 @@ public class Level {
                     continue;
                 Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
                 if (newHitbox.intersects(r) && e != callingEntity) {
+                    if(((EntityProjectile) callingEntity).getOwner() instanceof EntityPlayer){
+                        player.charge();
+                    }
                     callingEntity.onTouchEntity(e);
                     callingEntity.setDead(true, this);
                     return false;

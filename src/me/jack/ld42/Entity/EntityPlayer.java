@@ -13,6 +13,7 @@ public class EntityPlayer extends Entity {
 
     private float exp;
     private int level;
+    private int chargeLevel;
 
     public EntityPlayer(int x, int y) {
         super(x, y, 0, 0);
@@ -39,7 +40,7 @@ public class EntityPlayer extends Entity {
             move(moveSpeed, 0, level);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_E)){
-            level.reverseBorder(1000);
+            useCharge(level);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && System.currentTimeMillis() - lastShot >= level.parent.getSelected().getProjectile().getFireRate()) {
             level.addProjectile(new EntityProjectile(getX(), getY(), level.parent.getSelected().getProjectile(), level.getMouseLookingAtX(), level.getMouseLookingAtY(), this));
@@ -67,5 +68,21 @@ public class EntityPlayer extends Entity {
 
     public int getLevel() {
         return level;
+    }
+
+    public void charge() {
+        this.chargeLevel += 5;
+    }
+
+    public int getChargeLevel() {
+        return chargeLevel;
+    }
+
+    public void useCharge(Level level){
+        if(chargeLevel < 500){
+            return;
+        }
+        chargeLevel = 0;
+        level.reverseBorder(5000);
     }
 }
