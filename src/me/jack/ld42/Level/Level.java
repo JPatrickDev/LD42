@@ -80,6 +80,7 @@ public class Level {
         if (i >= 0)
             i -= 0.5f;
 
+
     }
 
     private void calculateCamera() {
@@ -128,20 +129,28 @@ public class Level {
                 int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 toAdd.add(new EntityAsteroid(xPos, yPos, 100));
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
         if (r.nextInt(10) == 0) {
             try {
                 int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 toAdd.add(new EasyEnemy(xPos, yPos));
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
+
+        ArrayList<Entity> valid = new ArrayList<Entity>();
         for (Entity add : toAdd) {
+            Rectangle newHitbox = new Rectangle(add.getX(),add.getY(),add.getWidth(),add.getHeight());
+            if (!(!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())))
+                valid.add(add);
+        }
+        for(Entity add : valid){
             entities.add(add);
         }
         toAdd.clear();
-
 
     }
 
@@ -175,14 +184,14 @@ public class Level {
             callingEntity.setDead(true, this);
             return false;
         }
-        if(callingEntity instanceof Drop){
+        if (callingEntity instanceof Drop) {
             return true;
         }
-        if(callingEntity instanceof EntityAsteroid){
+        if (callingEntity instanceof EntityAsteroid) {
             for (Entity e : this.entities) {
                 if (e instanceof EntityAsteroid && e != callingEntity) {
                     Rectangle r = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
-                    if(r.intersects(newHitbox)){
+                    if (r.intersects(newHitbox)) {
                         e.collide();
                         return false;
                     }
