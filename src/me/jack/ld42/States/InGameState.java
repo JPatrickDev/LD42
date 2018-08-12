@@ -26,10 +26,11 @@ public class InGameState extends BasicGameState implements GUIElementListener {
 
     public Level level;
     private GUIArea hud;
-    private Image hudBg;
+    private Image hudBg,tutorial;
     ProgressBar healthBar, chargeBar;
     ArrayList<WeaponSlot> slots = new ArrayList<WeaponSlot>();
     private boolean back = false;
+    private boolean showingTutorial = false;
 
     @Override
     public int getID() {
@@ -39,6 +40,7 @@ public class InGameState extends BasicGameState implements GUIElementListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         hudBg = new Image("res/hud.png");
+        tutorial = new Image("res/tutorial.png");
     }
 
     @Override
@@ -62,8 +64,6 @@ public class InGameState extends BasicGameState implements GUIElementListener {
         hud.addElement(new TextButton("Tutorial", 113, 35, 131, 25, Color.gray, Color.white).setListener(this));
         hud.addElement(new TextButton("Main Menu", 113, 65, 131, 25, Color.gray, Color.white).setListener(this));
         hud.addElement(new TextButton("Quit", 113, 4 + 117 - 27, 131, 25, Color.gray, Color.white).setListener(this));
-        //  hud.addElement(new TextButton("Back To Main Menu",50,230,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
-        //   hud.addElement(new TextButton("Quit",50,290,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
 
         hud.addElement(new TextArea("Weapon Selection", 250, 5, 226, 10));
         WeaponSlot slotOne = new WeaponSlot(251, 34, new BasicProjectile(), 0, this);
@@ -92,6 +92,9 @@ public class InGameState extends BasicGameState implements GUIElementListener {
             graphics.fillRect(gameContainer.getWidth()/2 - 225/2,gameContainer.getHeight()/2 - 25/2,225,25);
             graphics.setColor(Color.white);
             graphics.drawString("Press Any Key To Resume",gameContainer.getWidth()/2 - 225/2 + 10,gameContainer.getHeight()/2 - 25/2);
+        }
+        if(showingTutorial){
+            graphics.drawImage(tutorial,0,0);
         }
     }
 
@@ -123,6 +126,8 @@ public class InGameState extends BasicGameState implements GUIElementListener {
                 paused = !paused;
             }else if(text.equalsIgnoreCase("Main Menu")){
                 back = true;
+            }else if(text.equalsIgnoreCase("Tutorial")){
+                showingTutorial = !showingTutorial;
             }
         }
     }
