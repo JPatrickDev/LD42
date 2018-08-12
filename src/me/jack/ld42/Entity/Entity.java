@@ -8,14 +8,19 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by Jack on 11/08/2018.
  */
 public abstract class Entity {
-    private int x, y,width,height;
+    private int x;
+    private int y;
+    protected int width;
+    protected int height;
     public Image image;
 
+    public static Random r = new Random();
     public int moveSpeed = 4;
 
     public static SpriteSheet spriteSheet = null;

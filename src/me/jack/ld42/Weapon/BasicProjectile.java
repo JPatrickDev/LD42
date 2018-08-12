@@ -7,6 +7,6 @@ import me.jack.ld42.Weapon.Projectile;
  */
 public class BasicProjectile extends Projectile {
     public BasicProjectile() {
-        super("Basic", 15f, 5f, 100, 1500,0, 0);
+        super("Basic", 15f, 50f, 100, 1500,0, 0);
     }
 }

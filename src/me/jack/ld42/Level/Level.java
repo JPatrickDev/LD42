@@ -5,6 +5,7 @@ import me.jack.ld42.Entity.Drop.Drop;
 import me.jack.ld42.Entity.Enemy.BaseEnemy;
 import me.jack.ld42.Entity.Enemy.EasyEnemy;
 import me.jack.ld42.Entity.Entity;
+import me.jack.ld42.Entity.EntityAsteroid;
 import me.jack.ld42.Entity.EntityPlayer;
 import me.jack.ld42.Entity.EntityProjectile;
 import org.lwjgl.util.Point;
@@ -118,10 +119,10 @@ public class Level {
                 entityIterator.remove();
         }
 
-        if (r.nextInt(5) == 0) {
+        if (r.nextInt(1) == 0) {
             int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
             int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
-            toAdd.add(new EasyEnemy(xPos, yPos));
+            toAdd.add(new EntityAsteroid(xPos, yPos,100));
         }
         for (Entity add : toAdd) {
             entities.add(add);
