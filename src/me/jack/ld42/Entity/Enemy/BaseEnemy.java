@@ -1,6 +1,7 @@
 package me.jack.ld42.Entity.Enemy;
 
 import me.jack.ld42.Entity.Drop.BasicHealthDrop;
+import me.jack.ld42.Entity.Drop.ExpDrop;
 import me.jack.ld42.Entity.Enemy.AI.EnemyAI;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Level.Level;
@@ -23,6 +24,9 @@ public abstract class BaseEnemy extends Entity{
     @Override
     public void onDeath(Level level) {
         super.onDeath(level);
-        level.toAdd.add(new BasicHealthDrop(getX(),getY()));
+        level.toAdd.add(new BasicHealthDrop(getX(), getY()));
+        level.toAdd.add(new ExpDrop(getX(), getY()));
     }
+
+    public abstract float getExpPoints();
 }

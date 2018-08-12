@@ -1,11 +1,10 @@
 package me.jack.ld42.Level;
 
-import me.jack.ld42.Camera;
 import me.jack.ld42.Entity.Drop.Drop;
 import me.jack.ld42.Entity.Enemy.BaseEnemy;
 import me.jack.ld42.Entity.Enemy.EasyEnemy;
 import me.jack.ld42.Entity.Entity;
-import me.jack.ld42.Entity.EntityAsteroid;
+import me.jack.ld42.Entity.Enemy.EntityAsteroid;
 import me.jack.ld42.Entity.EntityPlayer;
 import me.jack.ld42.Entity.EntityProjectile;
 import org.lwjgl.util.Point;
@@ -116,14 +115,24 @@ public class Level {
         Iterator<Entity> entityIterator = entities.iterator();
         while (entityIterator.hasNext()) {
             Entity e = entityIterator.next();
-            if (e.retired || e.isDead())
+            if (e.retired || e.isDead()) {
                 entityIterator.remove();
+            }
         }
 
         if (r.nextInt(10) == 0) {
-            int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
-            int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
-            toAdd.add(new EntityAsteroid(xPos, yPos,100));
+            try {
+                int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+                int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+                toAdd.add(new EntityAsteroid(xPos, yPos, 100));
+            }catch (Exception e){}
+        }
+        if (r.nextInt(10) == 0) {
+            try {
+                int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+                int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+                toAdd.add(new EasyEnemy(xPos, yPos));
+            }catch (Exception e){}
         }
         for (Entity add : toAdd) {
             entities.add(add);

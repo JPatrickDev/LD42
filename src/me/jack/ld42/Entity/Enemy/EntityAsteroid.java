@@ -1,8 +1,7 @@
-package me.jack.ld42.Entity;
+package me.jack.ld42.Entity.Enemy;
 
 import me.jack.ld42.Entity.Drop.BasicHealthDrop;
 import me.jack.ld42.Entity.Enemy.AI.FloatingAI;
-import me.jack.ld42.Entity.Enemy.BaseEnemy;
 import me.jack.ld42.Level.Level;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -55,6 +54,11 @@ public class EntityAsteroid extends BaseEnemy{
         }else{
             level.toAdd.add(new BasicHealthDrop(getX(),getY()));
         }
+    }
+
+    @Override
+    public float getExpPoints() {
+        return 20;
     }
 
     public ArrayList<Rectangle> split(Level level){

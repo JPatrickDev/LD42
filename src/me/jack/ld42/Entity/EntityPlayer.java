@@ -12,6 +12,8 @@ import org.newdawn.slick.Image;
 public class EntityPlayer extends Entity {
 
     private Projectile currentProjectile;
+    private float exp;
+    private int level;
 
     public EntityPlayer(int x, int y) {
         super(x, y, 0, 0);
@@ -22,28 +24,47 @@ public class EntityPlayer extends Entity {
     }
 
     private long lastShot;
+
     @Override
     public void update(Level level) {
         super.update(level);
-        if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            move(0,-moveSpeed,level);
+        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+            move(0, -moveSpeed, level);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            move(0,moveSpeed,level);
+        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+            move(0, moveSpeed, level);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            move(-moveSpeed,0,level);
+        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            move(-moveSpeed, 0, level);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            move(moveSpeed,0,level);
+        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+            move(moveSpeed, 0, level);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && System.currentTimeMillis() - lastShot >= currentProjectile.getFireRate()){
-            level.addProjectile(new EntityProjectile(getX(),getY(),currentProjectile,level.getMouseLookingAtX(),level.getMouseLookingAtY(),this));
+        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && System.currentTimeMillis() - lastShot >= currentProjectile.getFireRate()) {
+            level.addProjectile(new EntityProjectile(getX(), getY(), currentProjectile, level.getMouseLookingAtX(), level.getMouseLookingAtY(), this));
             lastShot = System.currentTimeMillis();
         }
-        lookAt(level.getMouseLookingAtX(),level.getMouseLookingAtY());
+        lookAt(level.getMouseLookingAtX(), level.getMouseLookingAtY());
+    }
+
+    public float expForLevel(int level) {
+        return (float) Math.pow((level + 1) / 2, 2) + 20;
     }
 
 
+    public void addExp(float expPoints) {
+        this.exp += expPoints;
+        if (exp >= expForLevel(level)) {
+            level += 1;
+            exp = exp - expForLevel(level - 1);
+        }
+    }
 
+    public float getExp() {
+        return exp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 }

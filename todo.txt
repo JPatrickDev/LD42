@@ -11,20 +11,23 @@ Basic AI/
 Health/
 Basic HUD/
 Game over/
-    - Finish GOState
-Weapon System
 Fire rate for projectiles/
 Spawn inside border/
 Health Drop/
-Special ability to increase border size
 Asteroids/
-Upgrades system
 Few different images for the EmptyTile/
 Allow entities to be any size/
 Tweak tilesize/
 Improved AI
     - Float AI for asteroids and drops/
       - Maybe some passive towers as well?
+
+Exp System/
+Balance
+Finish GOState
+Weapon System
+Special ability to increase border size
+Upgrades system
 Sound
 Main menu
 About Screen

@@ -29,4 +29,9 @@ public class EasyEnemy extends BaseEnemy {
             level.addProjectile(new EntityProjectile(getX(),getY(),new BasicProjectile(),level.player.getX(),level.player.getY(),this));
         }
     }
+
+    @Override
+    public float getExpPoints() {
+        return 5f;
+    }
 }
