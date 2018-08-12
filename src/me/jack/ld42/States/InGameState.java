@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class InGameState extends BasicGameState implements GUIElementListener {
 
-    private Level level;
+    public Level level;
     private GUIArea hud;
     ProgressBar healthBar;
     ArrayList<WeaponSlot> slots = new ArrayList<WeaponSlot>();
@@ -45,11 +45,11 @@ public class InGameState extends BasicGameState implements GUIElementListener {
         hud.addElement(new TextArea("Exp", 0, 30, 100, 25));
         ExpDisplay exp  =new ExpDisplay(20, 50, 60, 60, Color.cyan, level.player);
         hud.addElement(exp);
-        WeaponSlot slotOne = new WeaponSlot(250,5,new BasicProjectile());
+        WeaponSlot slotOne = new WeaponSlot(250,5,new BasicProjectile(),0,this);
         slotOne.setListener(this);
         hud.addElement(slotOne);
         slotOne.setSelected(true);
-        WeaponSlot slotTwo = new WeaponSlot(295,5,new BasicMissile());
+        WeaponSlot slotTwo = new WeaponSlot(295,5,new BasicMissile(),10,this);
         slotTwo.setListener(this);
         hud.addElement(slotTwo);
 
@@ -129,6 +129,8 @@ public class InGameState extends BasicGameState implements GUIElementListener {
     }
 
     public void setSelected(WeaponSlot s){
+        if(s.isLocked())
+            return;
         for(WeaponSlot slot : slots){
             slot.setSelected(false);
         }

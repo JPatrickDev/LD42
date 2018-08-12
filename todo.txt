@@ -26,7 +26,7 @@ Exp System/
 Balance
 Finish GOState
 Weapon System/
-    - Weapons need to be locked until a level is reached 
+    - Weapons need to be locked until a level is reached/
 Special ability to increase border size
 Upgrades system
 Sound
