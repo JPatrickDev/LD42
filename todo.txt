@@ -29,10 +29,10 @@ Weapon System/
 Special ability to increase border size/
 Upgrades system
 Sound
-Main menu
+Main menu/
 About Screen
 Do a can move before spawning an Entity to make sure it fits/
-    - Improve
+    - Improve/
 Improved art for enemy/
 More enemies
 More weapons

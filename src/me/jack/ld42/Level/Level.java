@@ -28,7 +28,7 @@ public class Level {
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public ArrayList<Entity> toAdd = new ArrayList<Entity>();
 
-    public EntityPlayer player;
+    public EntityPlayer player = null;
 
     private int cX = 0, cY = 0;
     private int mouseLookingAtX, mouseLookingAtY;
@@ -137,7 +137,7 @@ public class Level {
         ArrayList<Entity> valid = new ArrayList<Entity>();
         for (Entity add : toAdd) {
             Rectangle newHitbox = new Rectangle(add.getX(),add.getY(),add.getWidth(),add.getHeight());
-            if (!(!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())))
+            if (canSpawn(newHitbox) || add instanceof EntityProjectile)
                 valid.add(add);
         }
         for(Entity add : valid){
@@ -186,6 +186,21 @@ public class Level {
                 }
             }
         }
+    }
+
+    public boolean canSpawn(Rectangle newHitbox){
+        if (!bounds.contains(newHitbox.getX(), newHitbox.getY()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY()) || !bounds.contains(newHitbox.getX(), newHitbox.getY() + newHitbox.getHeight()) || !bounds.contains(newHitbox.getX() + newHitbox.getWidth(), newHitbox.getY() + newHitbox.getHeight())) {
+            return false;
+        }
+        for(Entity e : entities){
+            Rectangle rectangle = new Rectangle(e.getX(),e.getY(),e.getWidth(),e.getHeight());
+            if(newHitbox.intersects(rectangle))
+                return false;
+        }
+        Rectangle p = new Rectangle(player.getX(),player.getY(),player.getWidth(),player.getHeight());
+        if(p.intersects(newHitbox))
+            return false;
+        return true;
     }
 
     public boolean canMove(Rectangle newHitbox, Entity callingEntity) {
