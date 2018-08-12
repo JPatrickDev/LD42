@@ -3,6 +3,7 @@ package me.jack.ld42.Level;
 import me.jack.ld42.Entity.Drop.Drop;
 import me.jack.ld42.Entity.Enemy.BaseEnemy;
 import me.jack.ld42.Entity.Enemy.EasyEnemy;
+import me.jack.ld42.Entity.Enemy.MediumEnemy;
 import me.jack.ld42.Entity.Entity;
 import me.jack.ld42.Entity.Enemy.EntityAsteroid;
 import me.jack.ld42.Entity.EntityPlayer;
@@ -117,7 +118,7 @@ public class Level {
             }
         }
 
-        if (r.nextInt(10) == 0) {
+        if (r.nextInt(20) == 0) {
             try {
                 int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
@@ -125,11 +126,19 @@ public class Level {
             } catch (Exception e) {
             }
         }
-        if (r.nextInt(10) == 0) {
+        if (r.nextInt(7) == 0) {
             try {
                 int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
                 toAdd.add(new EasyEnemy(xPos, yPos));
+            } catch (Exception e) {
+            }
+        }
+        if (r.nextInt(12) == 0) {
+            try {
+                int xPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+                int yPos = (int) (r.nextInt((int) (i * 4)) - i * 2);
+                toAdd.add(new MediumEnemy(xPos, yPos));
             } catch (Exception e) {
             }
         }

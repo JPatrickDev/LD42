@@ -17,8 +17,8 @@ public class EntityPlayer extends Entity {
 
     public EntityPlayer(int x, int y) {
         super(x, y, 0, 0);
-        setMaxHealth(100f);
-        setHealth(100f);
+        setMaxHealth(200f);
+        setHealth(200f);
 
     }
 
