@@ -50,6 +50,8 @@ public class Level {
     float i = (Level.CHUNK_SIZE * Level.TILE_SIZE) * 2;
 
     long reversedAt = 0;
+
+
     public void render(Graphics g) {
         calculateCamera();
         g.translate(-cX, -cY);
@@ -71,20 +73,7 @@ public class Level {
                 e.printStackTrace();
             }
         }
-        bounds = new Circle(0, 0, i);
-        if (i >= 0)
-            if(reversedFor != -1){
-                i += 1f;
-            }else{
-            i -= 0.25f;
-            }
 
-        if(reversedFor != -1){
-            if(System.currentTimeMillis() - reversedAt >= reversedFor){
-                reversedAt = 0;
-                reversedFor = -1;
-            }
-        }
     }
 
     private void calculateCamera() {
@@ -155,6 +144,22 @@ public class Level {
             entities.add(add);
         }
         toAdd.clear();
+
+
+        bounds = new Circle(0, 0, i);
+        if (i >= 0)
+            if(reversedFor != -1){
+                i += 1f;
+            }else{
+                i -= 0.25f;
+            }
+
+        if(reversedFor != -1){
+            if(System.currentTimeMillis() - reversedAt >= reversedFor){
+                reversedAt = 0;
+                reversedFor = -1;
+            }
+        }
 
     }
 

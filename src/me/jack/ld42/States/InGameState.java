@@ -2,6 +2,7 @@ package me.jack.ld42.States;
 
 import com.jdp30.gui.Elements.ProgressBar;
 import com.jdp30.gui.Elements.TextArea;
+import com.jdp30.gui.Elements.TextButton;
 import com.jdp30.gui.GUIArea;
 import com.jdp30.gui.GUIElement;
 import com.jdp30.gui.GUIElementListener;
@@ -27,6 +28,7 @@ public class InGameState extends BasicGameState implements GUIElementListener {
     private Image hudBg;
     ProgressBar healthBar, chargeBar;
     ArrayList<WeaponSlot> slots = new ArrayList<WeaponSlot>();
+    private boolean back = false;
 
     @Override
     public int getID() {
@@ -41,6 +43,7 @@ public class InGameState extends BasicGameState implements GUIElementListener {
     @Override
     public void enter(GameContainer container, StateBasedGame game) throws SlickException {
         super.enter(container, game);
+        back = false;
         slots.clear();
         this.level = new Level(this);
         hud = new GUIArea(0, 480 - 125, 480, 125);
@@ -54,6 +57,12 @@ public class InGameState extends BasicGameState implements GUIElementListener {
         chargeBar = new ProgressBar(250, 108, 226, 13, 500, Color.yellow, Color.yellow.darker());
         hud.addElement(chargeBar);
 
+        hud.addElement(new TextButton("Pause", 113, 6, 131, 25, Color.gray, Color.white).setListener(this));
+        hud.addElement(new TextButton("Tutorial", 113, 35, 131, 25, Color.gray, Color.white).setListener(this));
+        hud.addElement(new TextButton("Main Menu", 113, 65, 131, 25, Color.gray, Color.white).setListener(this));
+        hud.addElement(new TextButton("Quit", 113, 4 + 117 - 27, 131, 25, Color.gray, Color.white).setListener(this));
+        //  hud.addElement(new TextButton("Back To Main Menu",50,230,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
+        //   hud.addElement(new TextButton("Quit",50,290,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
 
         WeaponSlot slotOne = new WeaponSlot(251, 5, new BasicProjectile(), 0, this);
         slotOne.setListener(this);
@@ -70,18 +79,29 @@ public class InGameState extends BasicGameState implements GUIElementListener {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         level.render(graphics);
-        graphics.drawImage(hudBg,hud.getX(),hud.getY());
+        graphics.drawImage(hudBg, hud.getX(), hud.getY());
         hud.render(graphics);
+        if(paused){
+            graphics.setColor(Color.gray);
+            graphics.fillRect(gameContainer.getWidth()/2 - 225/2,gameContainer.getHeight()/2 - 25/2,225,25);
+            graphics.setColor(Color.white);
+            graphics.drawString("Press Any Key To Resume",gameContainer.getWidth()/2 - 225/2 + 10,gameContainer.getHeight()/2 - 25/2);
+        }
     }
+
+    boolean paused = false;
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         hud.update(gameContainer);
-        level.update(gameContainer.getInput());
+        if (!paused)
+            level.update(gameContainer.getInput());
         healthBar.setValue((int) level.player.getHealth());
         chargeBar.setValue((int) level.player.getChargeLevel());
         if (level.player.isDead())
             stateBasedGame.enterState(1);
+        if(back)
+            stateBasedGame.enterState(2);
     }
 
     @Override
@@ -89,6 +109,15 @@ public class InGameState extends BasicGameState implements GUIElementListener {
         System.out.println("Selected");
         if (element instanceof WeaponSlot) {
             setSelected((WeaponSlot) element);
+        } else {
+            String text = ((TextButton) element).getText();
+            if (text.equalsIgnoreCase("Quit")) {
+                System.exit(0);
+            }else if(text.equalsIgnoreCase("Pause")){
+                paused = !paused;
+            }else if(text.equalsIgnoreCase("Main Menu")){
+                back = true;
+            }
         }
     }
 
@@ -109,7 +138,8 @@ public class InGameState extends BasicGameState implements GUIElementListener {
 
     @Override
     public void keyPressed(char c, int code) {
-
+        if(paused)
+            paused = false;
     }
 
 
