@@ -3,7 +3,7 @@ Player faces mouse pointer/
 Map boundary/
 Chunk spawning/
     - Ensure the chunks surrounding the player are always loaded/
-    - Stop updating/rendering chunks if they are too far away
+    - Stop updating/rendering chunks if they are too far away/
 
 Despawning of chunks/
 Enemy spaceships/
@@ -22,18 +22,17 @@ Improved AI
     - Float AI for asteroids and drops/
       - Maybe some passive towers as well?
 Exp System/
-Balance
+Balance/
 Finish GOState/
 Weapon System/
     - Weapons need to be locked until a level is reached/
 Special ability to increase border size/
 Upgrades system
-Sound
 Main menu/
-About Screen
+About Screen/
 Do a can move before spawning an Entity to make sure it fits/
     - Improve/
 Improved art for enemy/
 More enemies/
 More weapons/
-Tutorial overlay
+Tutorial overlay/

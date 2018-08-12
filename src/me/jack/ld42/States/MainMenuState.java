@@ -5,10 +5,7 @@ import com.jdp30.gui.Elements.TextButton;
 import com.jdp30.gui.GUIArea;
 import com.jdp30.gui.GUIElement;
 import com.jdp30.gui.GUIElementListener;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -19,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MainMenuState extends BasicGameState implements GUIElementListener {
 
     private GUIArea area;
+    private Image logo;
     int mode;
     @Override
     public int getID() {
@@ -34,7 +32,7 @@ public class MainMenuState extends BasicGameState implements GUIElementListener 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         area = new GUIArea(0,0,gameContainer.getWidth(),gameContainer.getHeight());
-      //  area.addElement(new TextArea("Game Over!",0,0,area.getWidth(),50,Color.black,Color.white));
+        this.logo = new Image("res/logo.png");
         area.addElement(new TextButton("Play",50,170,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
         area.addElement(new TextButton("About",50,230,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
         area.addElement(new TextButton("Quit",50,290,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
@@ -42,6 +40,7 @@ public class MainMenuState extends BasicGameState implements GUIElementListener 
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        graphics.drawImage(logo,0,0);
         area.render(graphics);
     }
 

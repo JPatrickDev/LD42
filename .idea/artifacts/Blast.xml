@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Blast">
+    <output-path>$PROJECT_DIR$/out/artifacts/Blast</output-path>
+    <root id="archive" name="Blast.jar">
+      <element id="module-output" name="LD42" />
+      <element id="directory" name="res">
+        <element id="dir-copy" path="$PROJECT_DIR$/res" />
+      </element>
+    </root>
+  </artifact>
+</component>

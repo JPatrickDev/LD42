@@ -5,6 +5,6 @@ package me.jack.ld42.Weapon;
  */
 public class AdvancedProjectile extends Projectile {
     public AdvancedProjectile() {
-        super("Advanced", 20f, 50f, 400, 3000,0, 1);
+        super("Advanced", 20f, 25f, 400, 3000,0, 1);
     }
 }
