@@ -9,6 +9,7 @@ import com.jdp30.gui.GUIElementListener;
 import me.jack.ld42.GUI.ExpDisplay;
 import me.jack.ld42.GUI.WeaponSlot;
 import me.jack.ld42.Level.Level;
+import me.jack.ld42.Weapon.AdvancedProjectile;
 import me.jack.ld42.Weapon.BasicMissile;
 import me.jack.ld42.Weapon.BasicProjectile;
 import org.newdawn.slick.*;
@@ -68,12 +69,16 @@ public class InGameState extends BasicGameState implements GUIElementListener {
         slotOne.setListener(this);
         hud.addElement(slotOne);
         slotOne.setSelected(true);
-        WeaponSlot slotTwo = new WeaponSlot(296, 5, new BasicMissile(), 10, this);
+        WeaponSlot slotTwo = new WeaponSlot(296, 5, new BasicMissile(), 5, this);
         slotTwo.setListener(this);
         hud.addElement(slotTwo);
+        WeaponSlot slotThree = new WeaponSlot(296 + 45, 5, new AdvancedProjectile(), 10, this);
+        slotThree.setListener(this);
+        hud.addElement(slotThree);
 
         slots.add(slotOne);
         slots.add(slotTwo);
+        slots.add(slotThree);
     }
 
     @Override
