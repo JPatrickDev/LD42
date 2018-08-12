@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecbc39c2-decd-404d-8e92-bf4a18394e5b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/me/jack/ld42/States/AboutState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/me/jack/ld42/Entity/Enemy/BaseEnemy.java" afterPath="$PROJECT_DIR$/src/me/jack/ld42/Entity/Enemy/BaseEnemy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/me/jack/ld42/LD42Game.java" afterPath="$PROJECT_DIR$/src/me/jack/ld42/LD42Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/hud.png" afterPath="$PROJECT_DIR$/res/hud.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java" afterPath="$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java" />
     </list>
     <ignored path="LD42.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LD42Game.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LD42Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/me/jack/ld42/LD42Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4314721">
-              <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -132,11 +129,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InGameState.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="InGameState.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="70" selection-start-line="74" selection-start-column="70" selection-end-line="74" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.6615905">
+              <caret line="68" column="75" selection-start-line="68" selection-start-column="75" selection-end-line="68" selection-end-column="75" />
               <folding>
                 <element signature="e#931#943#0" expanded="true" />
               </folding>
@@ -203,12 +200,12 @@
         <option value="$PROJECT_DIR$/src/me/jack/ld42/Level/Level.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld42/Entity/Enemy/MediumEnemy.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld42/Entity/EntityPlayer.java" />
-        <option value="$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld42/Weapon/AdvancedProjectile.java" />
         <option value="$PROJECT_DIR$/todo.txt" />
         <option value="$PROJECT_DIR$/src/me/jack/ld42/Entity/Enemy/BaseEnemy.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld42/States/AboutState.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld42/LD42Game.java" />
+        <option value="$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java" />
       </list>
     </option>
   </component>
@@ -1484,16 +1481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="70" selection-start-line="74" selection-start-column="70" selection-end-line="74" selection-end-column="70" />
-          <folding>
-            <element signature="e#931#943#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/me/jack/ld42/Weapon/AdvancedProjectile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1531,9 +1518,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/me/jack/ld42/LD42Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4314721">
-          <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/me/jack/ld42/States/InGameState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6615905">
+          <caret line="68" column="75" selection-start-line="68" selection-start-column="75" selection-end-line="68" selection-end-column="75" />
+          <folding>
+            <element signature="e#931#943#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

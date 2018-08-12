@@ -65,14 +65,15 @@ public class InGameState extends BasicGameState implements GUIElementListener {
         //  hud.addElement(new TextButton("Back To Main Menu",50,230,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
         //   hud.addElement(new TextButton("Quit",50,290,gameContainer.getWidth()-100,50,Color.gray,Color.white).setListener(this));
 
-        WeaponSlot slotOne = new WeaponSlot(251, 5, new BasicProjectile(), 0, this);
+        hud.addElement(new TextArea("Weapon Selection", 250, 5, 226, 10));
+        WeaponSlot slotOne = new WeaponSlot(251, 34, new BasicProjectile(), 0, this);
         slotOne.setListener(this);
         hud.addElement(slotOne);
         slotOne.setSelected(true);
-        WeaponSlot slotTwo = new WeaponSlot(296, 5, new BasicMissile(), 5, this);
+        WeaponSlot slotTwo = new WeaponSlot(250 + 93, 34, new BasicMissile(), 5, this);
         slotTwo.setListener(this);
         hud.addElement(slotTwo);
-        WeaponSlot slotThree = new WeaponSlot(296 + 45, 5, new AdvancedProjectile(), 10, this);
+        WeaponSlot slotThree = new WeaponSlot(hud.getWidth()-45, 34, new AdvancedProjectile(), 10, this);
         slotThree.setListener(this);
         hud.addElement(slotThree);
 
