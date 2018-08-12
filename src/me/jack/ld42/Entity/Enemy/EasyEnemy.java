@@ -25,7 +25,7 @@ public class EasyEnemy extends BaseEnemy {
         super.update(level);
         Point next = this.ai.getNextMove(level,this);
         move(next.x,next.y,level);
-        if(new Random().nextInt(100) == 0){
+        if(new Random().nextInt(25) == 0 && Math.abs(getX() - level.player.getX()) <= 128 && Math.abs(getY() - level.player.getY()) <= 128){
             lookAt(level.player.getX(),level.player.getY());
             level.addProjectile(new EntityProjectile(getX(),getY(),new BasicProjectile(),level.player.getX(),level.player.getY(),this));
         }

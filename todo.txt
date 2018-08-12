@@ -32,5 +32,5 @@ Sound
 Main menu
 About Screen
 Do a can move before spawning an Entity to make sure it fits/
-Improved art for enemy
+Improved art for enemy/
 More enemies
